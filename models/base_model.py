@@ -20,13 +20,18 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+
         else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
-            self.__dict__.update(kwargs)
+            for key, value in kwargs.items():
+                if key in ('updated_at', 'created_at'):
+                    setattr(self, key, datetime.fromisoformat(value))
+                elif key != '__class__':
+                    setattr(self, key, value)  # Establece el atributo usando setattr
+
+            if not kwargs.get('id'):
+                setattr(self, 'id', str(uuid.uuid4()))
+                setattr(self, 'created_at', datetime.now())
+                setattr(self, 'updated_at', datetime.now())
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -40,7 +45,6 @@ class BaseModel:
         storage.new(self)
         storage.save()
         
-
     def to_dict(self):
         """Convert instance into dict format"""
         dictionary = {}
@@ -49,4 +53,13 @@ class BaseModel:
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
+
+        if '_sa_instance_state' in dictionary:
+            del dictionary['_sa_instance_state']
+
         return dictionary
+    
+    def delete(self):
+        """Deletes the current instance from the storage"""
+        from models import storage
+        storage.delete(self)
