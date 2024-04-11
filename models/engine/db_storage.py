@@ -28,7 +28,7 @@ class DBStorage:
         mysql_db = os.environ.get("HBNB_MYSQL_DB")
 
         """cadena de conexión para SQLAlchemy"""
-        db_url = f"mysql+mysqldb://{mysql_user}: {mysql_pwd}@{mysql_host}/" \
+        db_url = f"mysql+mysqldb://{mysql_user}:{mysql_pwd}@{mysql_host}/" \
             {mysql_db}"
 
         """motor de base de datos"""
