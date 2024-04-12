@@ -131,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
         param_pairs = re.findall(r'(\S+)=("[^"]*"|\S+)', params)
         for key, value in param_pairs:
             value = value.replace('_', ' ').replace('"', '').replace('\\', '')
-            if '.' in value:
+            if '.' in value and '@' not in value:
                 try:
                     setattr(new_instance, key, float(value))
                 except ValueError:
