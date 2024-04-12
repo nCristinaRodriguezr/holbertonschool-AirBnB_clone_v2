@@ -23,7 +23,7 @@ class User(BaseModel):
     reviews = relationship(
         "Review", 
         backref="user", 
-        cascade="all, delete"
+        cascade="all, delete",
         passive_deletes=True)
 
     def __init__(self, *args, **kwargs):
