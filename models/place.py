@@ -2,7 +2,7 @@
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Integer, Float
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 from models.review import Review
 import models
 
