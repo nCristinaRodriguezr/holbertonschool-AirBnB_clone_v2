@@ -81,4 +81,5 @@ class FileStorage:
         for obj in all_objects.values():
             if isinstance(obj, Review) and obj.place_id == place_id:
                 reviews.append(obj)
-        return reviews"""
+        return reviews 
+        otra opcion de la misma def get_reviews(self, place_id)"""
