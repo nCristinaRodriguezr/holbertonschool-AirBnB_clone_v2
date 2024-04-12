@@ -60,3 +60,25 @@ class FileStorage:
         if obj is not None:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             self.__objects.pop(key, None)
+
+    def get_reviews(self, place_id):
+        """Stores objects in a dictionary with keys based on class and ID.
+        Directly access reviews under the key Location"""
+        reviews = []
+        if f"Review.{place_id}" in self._objects:
+            reviews = self._objects[f"Review.{place_id}"]
+        return reviews
+    
+    """def get_reviews(self, place_id):
+        Returns a list of Review objects associated with a Place object
+        Args:
+            place_id (int): The ID of the Place object
+        Returns:
+            list: A list of Review objects or an empty list if none found
+    
+        all_objects = self.all()  # Get all objects
+        reviews = []
+        for obj in all_objects.values():
+            if isinstance(obj, Review) and obj.place_id == place_id:
+                reviews.append(obj)
+        return reviews"""

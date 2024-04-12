@@ -20,6 +20,12 @@ class User(BaseModel):
         cascade="all, delete-orphan",
         passive_deletes=True)
 
+    reviews = relationship(
+        "Review", 
+        backref="user", 
+        cascade="all, delete"
+        passive_deletes=True)
+
     def __init__(self, *args, **kwargs):
         """Initializes User instance"""
         super().__init__(*args, **kwargs)
