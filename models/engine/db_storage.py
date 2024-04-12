@@ -28,7 +28,7 @@ class DBStorage:
         mysql_db = os.environ.get("HBNB_MYSQL_DB")
 
         """cadena de conexión para SQLAlchemy"""
-        db_url = f"mysql+mysqldb://{mysql_user}: {mysql_pwd}@{mysql_host}/{mysql_db}"
+        db_url = f"mysql+mysqldb://{mysql_user}:{mysql_pwd}@{mysql_host}/{mysql_db}"
 
         """motor de base de datos"""
         self.__engine = create_engine(db_url, pool_pre_ping=True)
@@ -43,7 +43,12 @@ class DBStorage:
         self.reload()
 
     def all(self, cls=None):
-        from models import State, City, User, Amenity, Place, Review
+        from models.state import State
+        from models.city import City
+        from models.user import User
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
 
         classes = {
             'State': State,
