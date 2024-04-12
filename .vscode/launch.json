@@ -9,16 +9,16 @@
             "name": "Python Debugger: Current File with Arguments",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "./console.py",
             "console": "integratedTerminal",
             "env": {
-                "HBNB_MYSQL_USER": "nataly",
-                "HBNB_MYSQL_PWD": "nataly",
+                "HBNB_MYSQL_USER": "hbnb_dev",
+                "HBNB_MYSQL_PWD": "hbnb_dev_pwd",
                 "HBNB_MYSQL_HOST": "localhost",
                 "HBNB_MYSQL_DB": "hbnb_dev_db",
                 "HBNB_TYPE_STORAGE": "db"
             },
-            "args": ["create", "State", "name='California'"]
+            "args": ["create", "User", "email='gui@hbtn.io'", "password='guipwd'", "first_name='Guillaume'", "last_name='Snow'"]
         }
     ]
 }
