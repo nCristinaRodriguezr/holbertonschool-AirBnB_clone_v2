@@ -38,6 +38,10 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     amenity_ids = []
     
+    amenities = relationship(
+        "Amenity",
+        secondary=place_amenity,
+        viewonly=False)
 
     reviews = relationship(
             "Review",
@@ -64,3 +68,8 @@ class Place(BaseModel, Base):
         from models.amenity import Amenity
         if isinstance(obj, Amenity):
             self.amenity_ids.append(obj.id)
+    
+    @property
+    def amenities(self):
+        from models.amenity import Amenity
+        return [models.storage.get(Amenity, amenity_id) for amenity_id in self.amenity_ids]
