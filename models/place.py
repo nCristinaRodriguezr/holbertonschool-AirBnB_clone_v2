@@ -72,4 +72,7 @@ class Place(BaseModel, Base):
     @property
     def amenities(self):
         from models.amenity import Amenity
-        return [models.storage.get(Amenity, amenity_id) for amenity_id in self.amenity_ids]
+        amenities_storage = []
+        for amenity_id in self.amenity_ids:
+            amenities_storage.append(Amenity(id = amenity_id))
+        return amenities_storage
