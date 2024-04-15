@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+""" Base Model unittest tests """
 from models.base_model import BaseModel
 import unittest
 import datetime
@@ -9,7 +9,7 @@ import os
 
 
 class test_basemodel(unittest.TestCase):
-    """ """
+    """ Base Model unittest tests """
 
     def __init__(self, *args, **kwargs):
         """ """
@@ -97,3 +97,21 @@ class test_basemodel(unittest.TestCase):
         n = new.to_dict()
         new = BaseModel(**n)
         self.assertFalse(new.created_at == new.updated_at)
+
+    def test_delete(self):
+        """ """
+        i = BaseModel()
+        i.save()
+        i.delete()
+        key = 'BaseModel.' + i.id
+        with open('file.json', 'r') as f:
+            j = json.load(f)
+            self.assertFalse(key in j)
+
+    def test_init_with_args(self):
+        """ """
+        with self.assertRaises(TypeError):
+            i = BaseModel("argumento")
+
+if __name__ == '__main__':
+    unittest.main()
