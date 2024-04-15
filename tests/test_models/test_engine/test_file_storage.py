@@ -107,3 +107,61 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+    def setUp(self):
+        """Set up test environment"""
+        storage.reload()  # Reload storage to clear any objects added during tests
+
+    def tearDown(self):
+        """Remove storage file at end of tests"""
+        try:
+            os.remove('file.json')
+        except FileNotFoundError:
+            pass
+
+    def test_get_reviews_empty(self):
+        """Test get_reviews method with no reviews"""
+        reviews = storage.get_reviews("non_existent_place_id")
+        self.assertEqual(len(reviews), 0)
+
+    def test_get_reviews_with_reviews(self):
+        """Test get_reviews method with existing reviews"""
+        place_id = "test_place_id"
+        # Create reviews associated with a place
+        for i in range(3):
+            review = Review(place_id=place_id)
+            storage.new(review)
+        storage.save()
+
+        reviews = storage.get_reviews(place_id)
+        self.assertEqual(len(reviews), 3)
+        for review in reviews:
+            self.assertEqual(review.place_id, place_id)
+
+    def test_delete(self):
+        """Test delete method"""
+        obj = BaseModel()
+        obj_key = "{}.{}".format(type(obj).__name__, obj.id)
+        storage.new(obj)
+        storage.save()
+        storage.delete(obj)
+        self.assertNotIn(obj_key, storage.all())
+
+    def test_delete_non_existent_obj(self):
+        """Test delete method with non-existent object"""
+        obj = BaseModel()
+        storage.save()
+        storage.delete(obj)
+        # Deleting non-existent object should not raise an error
+
+    def test_delete_none(self):
+        """Test delete method with None as argument"""
+        obj = BaseModel()
+        obj_key = "{}.{}".format(type(obj).__name__, obj.id)
+        storage.new(obj)
+        storage.save()
+        storage.delete()
+        self.assertIn(obj_key, storage.all())
+
+if __name__ == '__main__':
+    unittest.main()
