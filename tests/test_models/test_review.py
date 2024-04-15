@@ -7,30 +7,28 @@ from models.review import Review
 class test_review(test_basemodel):
     """ Review unittest tests """
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "Review"
-        self.value = Review
-
-    def test_place_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.place_id), str)
-
-    def test_user_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.user_id), str)
-
-    def test_text(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.text), str)
-
-     def setUp(self):
-        """Executed before each test"""
+    def setUp(self):
+        """Creates a new Review instance for each test."""
         self.review = Review()
+
+    def test_is_subclass_of_basemodel(self):
+        """Verifies Review inherits from BaseModel."""
+        self.assertIsInstance(self.review, BaseModel)
+
+    def test_place_id_attribute(self):
+        """Tests the presence and type of the 'place_id' attribute."""
+        self.assertTrue(hasattr(self.review, 'place_id'))
+        self.assertIsInstance(self.review.place_id, str)
+
+    def test_user_id_attribute(self):
+        """Tests the presence and type of the 'user_id' attribute."""
+        self.assertTrue(hasattr(self.review, 'user_id'))
+        self.assertIsInstance(self.review.user_id, str)
+
+    def test_text_attribute(self):
+        """Tests the presence and type of the 'text' attribute."""
+        self.assertTrue(hasattr(self.review, 'text'))
+        self.assertIsInstance(self.review.text, str)
 
     def test_instance(self):
         """Verify if it instantiates correctly"""
@@ -41,18 +39,3 @@ class test_review(test_basemodel):
         self.assertTrue(hasattr(self.review, 'place_id'))
         self.assertTrue(hasattr(self.review, 'user_id'))
         self.assertTrue(hasattr(self.review, 'text'))
-
-    def test_place_id_type(self):
-        """Verify place_id attribute type"""
-        self.assertIsInstance(self.review.place_id, str)
-
-    def test_user_id_type(self):
-        """Verify user_id attribute type"""
-        self.assertIsInstance(self.review.user_id, str)
-
-    def test_text_type(self):
-        """Verify text attribute type"""
-        self.assertIsInstance(self.review.text, str)
-
-if __name__ == '__main__':
-    unittest.main()
