@@ -11,7 +11,7 @@ import os
 class test_basemodel(unittest.TestCase):
     """ Base Model unittest tests """
 
-     def setUp(self):
+    def setUp(self):
         """Executed before each test."""
         pass
 
