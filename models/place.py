@@ -23,6 +23,7 @@ place_amenity = Table(
         nullable=False)
     )
 
+
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
@@ -37,7 +38,7 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
-    
+
     amenities = relationship(
         "Amenity",
         secondary=place_amenity,
@@ -47,7 +48,7 @@ class Place(BaseModel, Base):
             "Review",
             backref="place",
             cascade="all, delete-orphan")
-    
+
     @property
     def reviews(self):
         """ Getter that that returns the list of Reviews instances """
@@ -57,6 +58,7 @@ class Place(BaseModel, Base):
             if review.place_id == (self.id):
                 new.append(review)
         return new
+
 
 @event.listens_for(Place.amenities, "append")
 def on_amenities_apped(target, value, _):

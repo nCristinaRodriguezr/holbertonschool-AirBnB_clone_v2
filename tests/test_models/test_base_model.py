@@ -72,7 +72,7 @@ class test_basemodel(unittest.TestCase):
     def test_kwargs_none(self):
         """Tests creating a BaseModel instance with None keyword arguments."""
         with self.assertRaises(TypeError):
-            BaseModel(None=None)
+            BaseModel()
 
     def test_kwargs_one(self):
         """Tests creating a BaseModel instance with one invalid keyword argument."""
