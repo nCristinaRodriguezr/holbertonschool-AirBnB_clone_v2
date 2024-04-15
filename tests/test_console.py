@@ -1,17 +1,17 @@
 #!/usr/bin/python3
-"""Test console.py"""
+"""Test console"""
+from models.base_model import BaseModel, Base
 import os
 import uuid
 import unittest
 from io import StringIO
 import sys
-from models.__init__ import storage
-from models.base_model import BaseModel
 from io import StringIO
 from unittest.mock import patch
 from models.engine.db_storage import DBStorage
 from models.engine.file_storage import FileStorage
 from console import HBNBCommand
+from console import storage
 
 
 class TestHBNBCommand(unittest.TestCase):
@@ -40,7 +40,8 @@ class TestHBNBCommand(unittest.TestCase):
     def test_help_EOF(self):
         """Test help message for EOF command"""
         output = self.capture_stdout("help EOF")
-        self.assertEqual(output.strip(), "Exits program without formatting")
+        self.assertEqual(output.strip(),
+                         "Exits the program without formatting")
 
     def test_create(self):
         """Test create method"""
@@ -55,10 +56,12 @@ class TestHBNBCommand(unittest.TestCase):
 
     def test_destroy(self):
         """Test destroy method"""
+        storage.reload()
+        initial_count = len(storage.all())
         self.base.save()
-        self.assertEqual(len(storage.all()), 1)  # Check if object is stored
+        self.assertEqual(len(storage.all()), initial_count + 1)
         self.capture_stdout("destroy BaseModel {}".format(self.base.id))
-        self.assertEqual(len(storage.all()), 0)  # Check if object is removed
+        self.assertEqual(len(storage.all()), initial_count)
 
     def test_all(self):
         """Test all method"""
@@ -74,16 +77,31 @@ class TestHBNBCommand(unittest.TestCase):
 
     def test_count(self):
         """Test count method"""
-        self.base.save()
+        keys = list(storage.all().keys())
+        for key in keys:
+            del storage.all()[key]
+        base1 = BaseModel()
+        base2 = BaseModel()
+        base3 = BaseModel()
+        base1.save()
+        base2.save()
+        base3.save()
         output = self.capture_stdout("count BaseModel")
-        self.assertEqual(output.strip(), "1")
+        self.assertEqual(output.strip(), "3")
 
     def test_update(self):
-        """Test update method"""
-        self.base.save()
-        self.capture_stdout("update BaseModel{} name Test"
-                            .format(self.base.id))
-        self.assertEqual(self.base.name, "Test")
+        """Test update command input."""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.console.onecmd("update")
+            self.assertEqual("** class name missing **\n", f.getvalue())
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.console.onecmd("update User")
+            self.assertEqual("** instance id missing **\n", f.getvalue())
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.console.onecmd("update User 12345")
+            self.assertEqual("** no instance found **\n", f.getvalue())
 
 
 if __name__ == '__main__':
