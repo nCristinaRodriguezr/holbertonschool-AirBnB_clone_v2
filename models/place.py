@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Table, Column, String, ForeignKey, Integer, Float
+from sqlalchemy import Table, Column, String, ForeignKey, Integer, Float, event
 from sqlalchemy.orm import relationship
 from models.review import Review
 import models
@@ -48,7 +48,6 @@ class Place(BaseModel, Base):
             backref="place",
             cascade="all, delete-orphan")
     
-    
     @property
     def reviews(self):
         """ Getter that that returns the list of Reviews instances """
@@ -59,20 +58,6 @@ class Place(BaseModel, Base):
                 new.append(review)
         return new
 
-    @reviews.setter
-    def amenities(self, obj):
-        """
-        Setter attribute amenities that handles append method
-        for adding an Amenity.id to the attribute amenity_ids.
-        """
-        from models.amenity import Amenity
-        if isinstance(obj, Amenity):
-            self.amenity_ids.append(obj.id)
-    
-    @property
-    def amenities(self):
-        from models.amenity import Amenity
-        amenities_storage = []
-        for amenity_id in self.amenity_ids:
-            amenities_storage.append(Amenity(id = amenity_id))
-        return amenities_storage
+@event.listens_for(Place.amenities, "append")
+def on_amenities_apped(target, value, _):
+    target.amenity_ids.append(value.id)
