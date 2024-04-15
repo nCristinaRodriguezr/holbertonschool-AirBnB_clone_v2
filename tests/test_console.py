@@ -38,7 +38,7 @@ class TestHBNBCommand(unittest.TestCase):
     def test_help_EOF(self):
         """Test help message for EOF command"""
         output = self.capture_stdout("help EOF")
-        self.assertEqual(output.strip(), "Exits the program without formatting")
+        self.assertEqual(output.strip(), "Exits program without formatting")
 
     def test_create(self):
         """Test create method"""
@@ -79,8 +79,10 @@ class TestHBNBCommand(unittest.TestCase):
     def test_update(self):
         """Test update method"""
         self.base.save()
-        self.capture_stdout("update BaseModel {} name Test".format(self.base.id))
+        self.capture_stdout("update BaseModel{} name Test"
+                            .format(self.base.id))
         self.assertEqual(self.base.name, "Test")
+
 
 if __name__ == '__main__':
     unittest.main()
