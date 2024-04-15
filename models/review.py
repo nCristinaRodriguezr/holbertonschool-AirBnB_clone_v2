@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Integer, Float
 
+
 class Review(BaseModel, Base):
     """ Review classto store review information """
     place_id = Column(String(60), ForeignKey("places.id"), nullable=False)
