@@ -56,10 +56,11 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """Delete obj from __objects"""
+        """Delete obj from __objects and update file"""
         if obj is not None:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             self.__objects.pop(key, None)
+            self.save()
 
     def get_reviews(self, place_id):
         """Stores objects in a dictionary with keys based on class and ID.
