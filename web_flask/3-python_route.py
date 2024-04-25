@@ -24,7 +24,7 @@ def hbnb():
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def display_text(text):
+def display_textt(text):
     text = text.replace('_', ' ')
     return f'C {text}'
 
@@ -37,6 +37,7 @@ def display_text(text='is_cool'):
     """
     text = text.replace('_', ' ')
     return f'Python {text}'
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
