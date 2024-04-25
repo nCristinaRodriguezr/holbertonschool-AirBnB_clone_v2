@@ -32,6 +32,9 @@ def display_text(text):
 @app.route('/python/<text>')
 @app.route('/python/')
 def display_text(text='is_cool'):
+    """
+    The default value of text is “is cool”
+    """
     text = text.replace('_', ' ')
     return f'Python {text}'
 
