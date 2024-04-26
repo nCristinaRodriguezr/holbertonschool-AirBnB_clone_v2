@@ -110,3 +110,9 @@ class DBStorage:
             sessionmaker(bind=self.__engine, expire_on_commit=False)
         )
         self.__session = Session()
+
+    def close(self):
+        """
+        Llama al método close en el atributo de sesión privada (self.__session)
+        """
+        self.__session.close()

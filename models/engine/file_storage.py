@@ -55,6 +55,10 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
+    def close(self):
+        """Calls reload() method for deserializing the JSON file to objects"""
+        self.reload()
+
     def delete(self, obj=None):
         """Delete obj from __objects"""
         if obj is not None:
