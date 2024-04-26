@@ -29,7 +29,7 @@ def display_textt(text):
     return f'C {text}'
 
 
-@app.route('/python/<text>')
+@app.route('/python/<text>', strict_slashes=False)
 @app.route('/python/')
 def display_text(text='is_cool'):
     """
@@ -39,12 +39,12 @@ def display_text(text='is_cool'):
     return f'Python {text}'
 
 
-@app.route('/number/<int:n>')
+@app.route('/number/<int:n>', strict_slashes=False)
 def display_number(n):
     return f'{n} is a number'
 
 
-@app.route('/number_template/<int:n>')
+@app.route('/number_template/<int:n>', strict_slashes=False)
 def display_number_template(n):
     if isinstance(n, int):
         return render_template('number.html', number=n)
