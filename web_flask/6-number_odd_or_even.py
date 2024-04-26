@@ -56,7 +56,10 @@ def display_number_template(n):
 def display_odd_or_even(n):
     if isinstance(n, int):
         result = "even" if n % 2 == 0 else "odd"
-        return render_template('6-number_odd_or_even.html', number=n, result=result)
+        return render_template(
+            '6-number_odd_or_even.html',
+            number=n, result=result
+        )
     else:
         return 'Error: Not an integer'
 
