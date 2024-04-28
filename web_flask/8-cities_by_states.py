@@ -27,7 +27,8 @@ def states_list():
         else:
             cities = storage.all(City).values()
             cities = [city for city in cities if city.state_id == state.id]
-        state_cities[state.id] = cities
+        sorted_cities = sorted(cities, key=lambda city: city.name)
+        state_cities[state.id] = sorted_cities
     return render_template(
             '8-cities_by_states.html',
             sorted_states=sorted_states,
