@@ -8,7 +8,7 @@
             "name": "Python Debugger: Current File with Arguments",
             "type": "debugpy",
             "request": "launch",
-            "program": "main.py",
+            "program": "web_flask/7-states_list.py",
             "console": "integratedTerminal",
             "env": {
                 "HBNB_MYSQL_USER": "hbnb_dev",
