@@ -23,7 +23,8 @@ class State(BaseModel, Base):
         """ Getter method to retrieve cities for the current State """
         city_list = []
 
-        for obj in storage.all(City):
+        cities = storage.all(City)
+        for obj_id, obj in cities.items():
             if obj.state_id == self.id:
                 city_list.append(obj)
         return city_list
