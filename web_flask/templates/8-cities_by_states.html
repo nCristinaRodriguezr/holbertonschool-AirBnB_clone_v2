@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>States and Cities</title>
 </head>
-<BODY>
-    <H1>States</H1>
-    <UL>
+<body>
+    <h1>States</h1>
+    <ul>
         {% for state in sorted_states %}
-            <LI>{{ state.id }}: <b>{{ state.name }}</b></LI>
-            <UL>
-                {% for city in state.cities %}
-                    <LI>{{ city.id }}: <b>{{ city.name }}</b></LI>
-                {% endfor %}
-            </UL>
+            <li>{{ state.id }}: <b>{{ state.name }}</b>
+                <ul>
+                    {% for city in state.cities %}
+                        <li>{{ city.id }}: <b>{{ city.name }}</b></li>
+                    {% endfor %}
+                </ul>
+            </li>
         {% endfor %}
-    </UL>
-</BODY>
+        </ul>
+</body>
 </html>
