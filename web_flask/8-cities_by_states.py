@@ -24,10 +24,11 @@ def states_list():
     for state in sorted_states:
         if storage.__class__.__name__ == "DBStorage":
             cities = [city for city in state.cities]
+            sorted_cities = sorted(cities, key=lambda city: city.name)
         else:
             cities = storage.all(City).values()
             cities = [city for city in cities if city.state_id == state.id]
-        sorted_cities = sorted(cities, key=lambda city: city.name)
+            sorted_cities = sorted(cities, key=lambda city: city.name)
         state_cities[state.id] = sorted_cities
     return render_template(
             '8-cities_by_states.html',
