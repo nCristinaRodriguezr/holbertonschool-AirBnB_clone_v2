@@ -27,14 +27,12 @@ def show_states():
 def show_state(state_id):
     if storage.__class__.__name__ == "DBStorage":
         session = storage._DBStorage__session
-        state = session.query(State).get(state_id)
+        states_list = session.query(State).filter(State.id == state_id)
+        state = states_list[0]
     else:
         state = storage.get(State, state_id)
-    if state:
-        cities = sorted(state.cities, key=lambda city: city.name)
-        return render_template('9-states.html', state=state, cities=cities)
-    else:
-        return render_template('not_found.html')
+    cities = sorted(state.cities, key=lambda city: city.name)
+    return render_template('9-states.html', state=state, cities=cities)
 
 
 if __name__ == "__main__":
