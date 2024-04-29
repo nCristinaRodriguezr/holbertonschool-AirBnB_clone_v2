@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>States and Cities</title>
+</head>
+<body>
+    <!-- Se verifica si las lista sorted_states esta vacia o no
+        si no esta vacia entra al if, muestra un encabezado states 
+        Luego se crea una lista ordenada ul donde cada elemento de la
+        lista representa un estado con id y nombre.
+    -->
+    {% if sorted_states %}
+        <h1>States</h1>
+        <ul>
+            {% for state in sorted_states %}
+                <li>{{ state.id }}: <b>{{ state.name }}</b></li>
+            {% endfor %}
+        </ul>
+    <!-- Si la lista de estado esta vacia entra a este else
+        Aqui verifica si la lista cities esta vacia o no.
+        si hay elementos en la lista 
+     -->
+    {% else %}
+        <h1>State</h1>
+        {% if cities %}
+            <h1>State: {{ state.name }}</h1>
+            <h3>Cities:</h3>
+            <ul>
+                {% for city in cities %}
+                    <li>{{ city.id }}: <b>{{ city.name }}</b></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h1>Not found!</h1>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
