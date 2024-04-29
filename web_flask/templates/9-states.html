@@ -11,8 +11,8 @@
         Luego se crea una lista ordenada ul donde cada elemento de la
         lista representa un estado con id y nombre.
     -->
+    <h1>States</h1>
     {% if sorted_states %}
-        <h1>States</h1>
         <ul>
             {% for state in sorted_states %}
                 <li>{{ state.id }}: <b>{{ state.name }}</b></li>
